@@ -17,7 +17,8 @@ import java.awt.image.BufferedImage;
 @Slf4j
 @PluginDescriptor(
 		name = "Combat Level Calculator",
-		description="Enable the Combat Level Calculator panel"
+		description="Enable the Combat Level Calculator panel",
+		tags="combat, level, calc, panel"
 )
 public class CombatLevelCalculatorPlugin extends Plugin
 {
@@ -53,9 +54,4 @@ public class CombatLevelCalculatorPlugin extends Plugin
 		clientToolbar.removeNavigation(uiNavigationButton);
 	}
 
-	@Subscribe
-	public void onGameStateChanged(GameStateChanged gameStateChanged)
-	{
-
-	}
 }

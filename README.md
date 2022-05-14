@@ -1,2 +1,2 @@
 # Combat Level Calculator
-Calculate combat levels based on given skill levels
+A combat level calculator panel for runelite.
