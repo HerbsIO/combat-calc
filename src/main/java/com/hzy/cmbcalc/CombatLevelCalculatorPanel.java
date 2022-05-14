@@ -91,10 +91,11 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
     }
 
+    //Add skill icons & input fields to the panel
     void addSkillInputs() {
         c.ipady = 6;
         c.ipadx = 6;
-        KeyListener listener = new KeyAdapter() {
+        KeyListener listener = new KeyAdapter() { //Numbers only
             boolean consumeKey = false;
             @Override
             public void keyPressed(KeyEvent e) {
@@ -119,13 +120,13 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
             }
         };
 
-        for (Skill skill : skills) {
+        for (Skill skill : skills) {    //Loop to generate the icons & fields
             c.gridx = 1;
             c.ipady = 4;
             c.ipadx = 4;
             c.gridy++;
             FlatTextField field = new FlatTextField();
-            field.setText("1");
+            field.setText(skill != Skill.HITPOINTS ? "1" : "10");
             field.setPreferredSize(new Dimension(64, 32));
             field.setBorder(emptyBorder);
             field.setBackground(ColorScheme.DARKER_GRAY_COLOR);
