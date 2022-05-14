@@ -2,7 +2,7 @@ package com.hzy.cmbcalc;
 
 public class CombatLevelCalculator {
     private final double xratio;
-    
+
     private double base, melee, range, mage, level;
     CombatLevelCalculator() {
         xratio = 0.325; // Base multiplier for each style
