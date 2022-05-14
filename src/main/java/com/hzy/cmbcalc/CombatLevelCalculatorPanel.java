@@ -127,8 +127,8 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
     }
     void calc() {
         int[] lvls = {1,1,1,1,1,1,1};
-        for(FlatTextField field : skillFields) {
-            lvls[skillFields.indexOf(field)] = Integer.parseInt(field.getText());
+        for(int j = 0; j < 7; j++) {
+            lvls[j] = Integer.parseInt(skillFields.get(j).getText());
         }
         double lvl = levelCalculator.calculateLevel(lvls);
 
