@@ -47,7 +47,7 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         addSkillInputs();
         EmptyBorder emptyBorder = new EmptyBorder(8, 1, 8, 1);
         cmbLevel = new JLabel();
-        cmbLevel.setText("3.00");
+        cmbLevel.setText("3.4");
         cmbLevel.setFont(FontManager.getRunescapeBoldFont());
         cmbLevel.setForeground(Color.WHITE);
         cmbLevel.setBorder(emptyBorder);
@@ -63,24 +63,15 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         button.setFocusPainted(false);
         c.gridx = 1;
         c.gridy = 11;
-        MouseListener listener = new MouseAdapter() {
+        ActionListener listener = new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 calc();
-                button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-                e.consume();
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setBackground(ColorScheme.DARKER_GRAY_HOVER_COLOR);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
                 button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
             }
         };
-        button.addMouseListener(listener);
+
+        button.addActionListener(listener);
         add(button, c);
         ImageIcon icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "cmb.png"));
         c.gridx = 0;
@@ -96,37 +87,22 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         c.ipady = 6;
         c.ipadx = 6;
         KeyListener listener = new KeyAdapter() { //Numbers only
-            boolean consumeKey = false;
-            @Override
-            public void keyPressed(KeyEvent e) {
-                char c = e.getKeyChar();
-                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                    consumeKey = true;
-                }
-                if(consumeKey) {
-                    e.consume();
-                }
-            }
             @Override
             public void keyTyped(KeyEvent e ) {
-                if(consumeKey) {
+                char ch = e.getKeyChar();
+                if ( ((ch < '0') || (ch > '9')) && (ch != KeyEvent.VK_BACK_SPACE)) {
                     e.consume();
                 }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                consumeKey = false;
             }
         };
 
-        for (Skill skill : skills) {    //Loop to generate the icons & fields
+        for (int i = 0; i < 7; i++) {    //Loop to generate the icons & fields
             c.gridx = 1;
             c.ipady = 4;
             c.ipadx = 4;
             c.gridy++;
             FlatTextField field = new FlatTextField();
-            field.setText(skill != Skill.HITPOINTS ? "1" : "10");
+            field.setText(skills[i] != Skill.HITPOINTS ? "1" : "10");
             field.setPreferredSize(new Dimension(64, 32));
             field.setBorder(emptyBorder);
             field.setBackground(ColorScheme.DARKER_GRAY_COLOR);
@@ -141,7 +117,7 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
             skillFields.add(field);
             c.ipady = 0;
             c.ipadx = 0;
-            ImageIcon skillIcon = new ImageIcon(iconManager.getSkillImage(skill));
+            ImageIcon skillIcon = new ImageIcon(iconManager.getSkillImage(skills[i]));
             c.gridx = 0;
             JLabel skillLabel = new JLabel(skillIcon);
             skillLabel.setBorder(emptyBorder);
@@ -156,6 +132,6 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         }
         double lvl = levelCalculator.calculateLevel(lvls);
 
-        cmbLevel.setText("" + (lvl < 3 ? 3 : (lvl > 126.00 ? 126.00 : lvl)));
+        cmbLevel.setText("" + (lvl < 3 ? 3 : (Math.min(lvl, 126.00))));
     }
 }

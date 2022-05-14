@@ -40,12 +40,13 @@ public class CombatLevelCalculatorPlugin extends Plugin
 		iconManager = new SkillIconManager();
 		final CombatLevelCalculatorPanel combatLevelCalculatorPanel = new CombatLevelCalculatorPanel(client, iconManager);
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "cmb.png");
-		clientToolbar.addNavigation(NavigationButton.builder()
+		uiNavigationButton = NavigationButton.builder()
 				.tooltip("Combat Lvl Calculator")
 				.icon(icon)
 				.priority(12)
 				.panel(combatLevelCalculatorPanel)
-				.build());
+				.build();
+		clientToolbar.addNavigation(uiNavigationButton);
 	}
 
 	@Override
