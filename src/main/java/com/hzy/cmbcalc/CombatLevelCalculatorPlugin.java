@@ -36,7 +36,7 @@ public class CombatLevelCalculatorPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		iconManager = new SkillIconManager();
-		final CombatLevelCalculatorPanel combatLevelCalculatorPanel = new CombatLevelCalculatorPanel(client, iconManager);
+		final CombatLevelCalculatorPanel combatLevelCalculatorPanel = new CombatLevelCalculatorPanel(iconManager);
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "cmb.png");
 		uiNavigationButton = NavigationButton.builder()
 				.tooltip("Combat Lvl Calculator")

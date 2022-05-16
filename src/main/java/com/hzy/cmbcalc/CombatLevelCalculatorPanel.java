@@ -1,8 +1,5 @@
 package com.hzy.cmbcalc;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.client.game.SkillIconManager;
 import net.runelite.client.ui.ColorScheme;
@@ -18,18 +15,15 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class CombatLevelCalculatorPanel extends PluginPanel {
-    private final Client client;
-
     private final SkillIconManager iconManager;
-    private GridBagConstraints c;
+    private final GridBagConstraints c;
     private JLabel cmbLevel;
     private final CombatLevelCalculator levelCalculator;
     private final Skill[] skills;
     private final ArrayList<FlatTextField> skillFields = new ArrayList<>();
     private final EmptyBorder emptyBorder = new EmptyBorder(12, 4, 12, 4);
 
-    CombatLevelCalculatorPanel(Client client, SkillIconManager iconManager) {
-        this.client = client;
+    CombatLevelCalculatorPanel(SkillIconManager iconManager) {
         this.iconManager = iconManager;
 
         c = new GridBagConstraints();
@@ -65,12 +59,9 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         button.setFocusPainted(false);
         c.gridx = 1;
         c.gridy = 11;
-        ActionListener listener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                calc();
-                button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-            }
+        ActionListener listener = e -> {
+            calc();
+            button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
         };
 
         button.addActionListener(listener);
@@ -128,7 +119,6 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
     }
     void calc() {
-        JsonObject obj = new JsonObject();
         int[] lvls = {1,1,1,1,1,1,1};
         for(int j = 0; j < 7; j++) {
             lvls[j] = Integer.parseInt(skillFields.get(j).getText());
