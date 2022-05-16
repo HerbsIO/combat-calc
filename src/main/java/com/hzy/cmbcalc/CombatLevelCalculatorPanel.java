@@ -18,21 +18,20 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
     private final SkillIconManager iconManager;
     private final GridBagConstraints c;
     private JLabel cmbLevel;
-    private final CombatLevelCalculator levelCalculator;
     private final Skill[] skills;
     private final ArrayList<FlatTextField> skillFields = new ArrayList<>();
-    private final EmptyBorder emptyBorder = new EmptyBorder(12, 4, 12, 4);
+    private final EmptyBorder emptyBorder;
 
     CombatLevelCalculatorPanel(SkillIconManager iconManager) {
         this.iconManager = iconManager;
 
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
+
         setBorder(new EmptyBorder(20, 10, 10, 10));
+        emptyBorder = new EmptyBorder(8, 1, 8, 1);
 
-        skills = new Skill[] {Skill.ATTACK, Skill.STRENGTH, Skill.DEFENCE, Skill.HITPOINTS, Skill.RANGED, Skill.MAGIC, Skill.PRAYER};
-
-        levelCalculator = new CombatLevelCalculator();
+        skills = new Skill[]{Skill.ATTACK, Skill.STRENGTH, Skill.DEFENCE, Skill.HITPOINTS, Skill.RANGED, Skill.MAGIC, Skill.PRAYER};
         drawPanel();
     }
 
@@ -41,7 +40,6 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         c.gridx = 1;
         c.gridy = 0;
         addSkillInputs();
-        EmptyBorder emptyBorder = new EmptyBorder(8, 1, 8, 1);
         cmbLevel = new JLabel();
         cmbLevel.setText("3.4");
         cmbLevel.setFont(FontManager.getRunescapeBoldFont());
@@ -57,8 +55,10 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
         button.setForeground(Color.WHITE);
         button.setBorder(emptyBorder);
         button.setFocusPainted(false);
+
         c.gridx = 1;
         c.gridy = 11;
+
         ActionListener listener = e -> {
             calc();
             button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
@@ -119,11 +119,12 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
     }
     void calc() {
-        int[] lvls = {1,1,1,1,1,1,1};
+        int[] levels = {1,1,1,1,1,1,1};
         for(int j = 0; j < 7; j++) {
-            lvls[j] = Integer.parseInt(skillFields.get(j).getText());
+            levels[j] = Integer.parseInt(skillFields.get(j).getText());
         }
-        double lvl = levelCalculator.calculateLevel(lvls);
+        double xratio = 0.325;
+        double lvl = (0.25 * (levels[2] + levels[3] + (levels[6] / 2))) + Math.max(Math.max(xratio * (levels[0] + levels[1]), xratio * ((levels[4] / 2) + levels[4])), xratio * ((levels[5] / 2) + levels[5]));
 
         cmbLevel.setText("" + (lvl < 3 ? 3 : (Math.min(lvl, 126.00))));
     }
