@@ -11,7 +11,10 @@ import net.runelite.client.util.ImageUtil;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class CombatLevelCalculatorPanel extends PluginPanel {
@@ -19,17 +22,18 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
     private final GridBagConstraints c;
     private JLabel cmbLevel;
     private final Skill[] skills;
-    private final ArrayList<FlatTextField> skillFields = new ArrayList<>();
+    private final ArrayList<FlatTextField> skillFields;
     private final EmptyBorder emptyBorder;
-
+    private final Dimension inputDimension;
     CombatLevelCalculatorPanel(SkillIconManager iconManager) {
         this.iconManager = iconManager;
-
+        skillFields = new ArrayList<>();
+        inputDimension = new Dimension(56, 44);
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.NONE;
 
         setBorder(new EmptyBorder(20, 10, 10, 10));
-        emptyBorder = new EmptyBorder(8, 1, 8, 1);
+        emptyBorder = new EmptyBorder(8, 2, 8, 2);
 
         skills = new Skill[]{Skill.ATTACK, Skill.STRENGTH, Skill.DEFENCE, Skill.HITPOINTS, Skill.RANGED, Skill.MAGIC, Skill.PRAYER};
         drawPanel();
@@ -77,8 +81,6 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
     //Add skill icons & input fields to the panel
     void addSkillInputs() {
-        c.ipady = 6;
-        c.ipadx = 6;
         KeyListener listener = new KeyAdapter() { //Numbers only
             @Override
             public void keyTyped(KeyEvent e ) {
@@ -96,8 +98,8 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
             c.gridy++;
             FlatTextField field = new FlatTextField();
             field.setText(skills[i] != Skill.HITPOINTS ? "1" : "10");
-            field.setPreferredSize(new Dimension(64, 32));
-            field.setBorder(emptyBorder);
+            field.setPreferredSize(inputDimension);
+
             field.setBackground(ColorScheme.DARKER_GRAY_COLOR);
             field.setHoverBackgroundColor(ColorScheme.DARKER_GRAY_HOVER_COLOR);
             field.setForeground(Color.WHITE);
