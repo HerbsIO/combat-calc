@@ -70,7 +70,7 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
         button.addActionListener(listener);
         add(button, c);
-        ImageIcon icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "cmb.png"));
+        ImageIcon icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "/cmb.png"));
         c.gridx = 0;
         c.gridy = 9;
         JLabel cmbLabel = new JLabel(icon);
