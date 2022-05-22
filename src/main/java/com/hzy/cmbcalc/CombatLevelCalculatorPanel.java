@@ -25,6 +25,9 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
     private final ArrayList<FlatTextField> skillFields;
     private final EmptyBorder emptyBorder;
     private final Dimension inputDimension;
+    private final double xratio = 0.325;
+    private int[] levels = {1,1,1,10,1,1,1};
+
     CombatLevelCalculatorPanel(SkillIconManager iconManager) {
         this.iconManager = iconManager;
         skillFields = new ArrayList<>();
@@ -121,11 +124,9 @@ public class CombatLevelCalculatorPanel extends PluginPanel {
 
     }
     void calc() {
-        int[] levels = {1,1,1,1,1,1,1};
         for(int j = 0; j < 7; j++) {
             levels[j] = Integer.parseInt(skillFields.get(j).getText());
         }
-        double xratio = 0.325;
         double lvl = (0.25 * (levels[2] + levels[3] + (levels[6] / 2))) + Math.max(Math.max(xratio * (levels[0] + levels[1]), xratio * ((levels[4] / 2) + levels[4])), xratio * ((levels[5] / 2) + levels[5]));
 
         cmbLevel.setText("" + (lvl < 3 ? 3 : (Math.min(lvl, 126.00))));

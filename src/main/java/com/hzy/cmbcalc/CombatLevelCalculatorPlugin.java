@@ -37,7 +37,7 @@ public class CombatLevelCalculatorPlugin extends Plugin
 	{
 		iconManager = new SkillIconManager();
 		final CombatLevelCalculatorPanel combatLevelCalculatorPanel = new CombatLevelCalculatorPanel(iconManager);
-		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "cmb.png");
+		final BufferedImage icon = ImageUtil.loadImageResource(CombatLevelCalculatorPlugin.class, "/cmb.png");
 		uiNavigationButton = NavigationButton.builder()
 				.tooltip("Combat Lvl Calculator")
 				.icon(icon)
